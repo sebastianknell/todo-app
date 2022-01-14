@@ -1,0 +1,12 @@
+.sidebar-item{
+  font-size: 16px;
+  font-weight: bold;
+  padding: 0.5rem 1rem;
+  /* background-color: tomato; */
+  color: white;
+  cursor: pointer;
+}
+
+.sidebar-item:hover {
+  color: #b4b4b4;
+}

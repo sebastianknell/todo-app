@@ -1,23 +1,25 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+import Sidebar from "./components/Sidebar/Sidebar";
+import InboxView from './components/Views/InboxView'
+import TodayView from './components/Views/TodayView'
+import UpcomingView from "./components/Views/UpcomingView";
+import "./App.css";
 
 function App() {
+  const [selectedView, setSelectedView] = useState(0);
+
+  const selectViewHandler = (view) => {
+    setSelectedView(view);
+  };
+
+  const views = [<InboxView />, <TodayView />, <UpcomingView />]
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="app">
+      <Sidebar onSelectView={selectViewHandler} />
+      <div className="view">
+        {views[selectedView]}
+      </div>
     </div>
   );
 }
