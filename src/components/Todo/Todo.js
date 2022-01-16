@@ -1,9 +1,11 @@
+import Checkbox from './Checkbox';
+
 import './Todo.css'
 
 function Todo(props) {
   return (
     <div className='todo'>
-      <div className='checkbox'></div>
+      <Checkbox />
       <div className='todo-body'>
         {props.todo.title}
       </div>
