@@ -1,9 +1,11 @@
-import { FaSearch } from "react-icons/fa";
+import { useState } from "react";
+import Header from "./Header"
 import Spacer from "../UI/Spacer";
 import Todo from "../Todo/Todo";
 import "./InboxView.css";
 
-function InboxView() {
+function InboxView(props) {
+  const [selected, setSelected] = useState();
   const todos = [
     {
       id: 1,
@@ -11,19 +13,26 @@ function InboxView() {
       dueDate: new Date("2022-01-16"),
       completed: false,
     },
+    {
+      id: 2,
+      title: "Comprar carne",
+      dueDate: new Date("2022-01-16"),
+      completed: false,
+    },
   ];
+
+  const handleClick = (id) => {
+    setSelected((prevState) => {
+      if (prevState === id) return undefined;
+      return id;
+    });
+  }
 
   return (
     <div className="inbox-view">
-      <div className="header">
-        <Spacer />
-        <div className="header-title">Inbox</div>
-        <Spacer />
-        <FaSearch />
-      </div>
+      <Header title="Inbox"/>
       <div className="inbox-body">
-        <Todo todo={todos[0]} />
-        <Todo todo={todos[0]} />
+        {todos.map(item => <Todo todo={item} onClick={handleClick} highlighted={selected === item.id ? true : false}/>)}
       </div>
     </div>
   );
