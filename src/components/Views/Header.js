@@ -11,10 +11,9 @@ function Header(props) {
 
   return (
     <div style={headerStyle}>
-      <Spacer />
       <div>{props.title}</div>
       <Spacer />
-      <FaSearch />
+      <FaSearch cursor={"pointer"}/>
     </div>
   );
 }

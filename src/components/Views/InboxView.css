@@ -1,10 +1,7 @@
 .inbox-view {
   display: flex;
   flex-direction: column;
+  height: calc(100vh - 2rem);
   padding: 1rem;
   margin: 0 25%;
-}
-
-.inbox-body {
-  padding: 0.5rem;
 }
