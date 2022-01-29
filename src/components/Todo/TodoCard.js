@@ -6,12 +6,10 @@ import Checkbox from "./Checkbox";
 import "./TodoCard.css";
 
 function TodoCard(props) {
-const todoContext = useContext(TodoContext);
+  const todoContext = useContext(TodoContext);
+  const [completed, setCompleted] = useState(props.todo.completed)
   const handleCompleted = () => {
-    todoContext.updateTodo(props.todo.id, {
-      ...props.todo,
-      completed: !props.todo.completed,
-    });
+    setCompleted((prevState) => !prevState)
   };
 
   const [todoDeadline, setTodoDeadline] = useState(
@@ -23,7 +21,6 @@ const todoContext = useContext(TodoContext);
   };
 
   const titleRef = useRef();
-  // titleRef.current.focus();
 
   const notesRef = useRef();
   const notesChangeHandler = () => {
@@ -38,6 +35,7 @@ const todoContext = useContext(TodoContext);
       ...props.todo,
       title: newTitle,
       notes: newNotes,
+      completed: completed
     });
     props.onClose();
   };
@@ -55,7 +53,7 @@ const todoContext = useContext(TodoContext);
       <Card className="todo-card">
         <header className="todo-header">
           <Checkbox
-            completed={props.todo.completed}
+            completed={completed}
             onClick={handleCompleted}
           />
           <div className="todo-title">
@@ -84,7 +82,7 @@ const todoContext = useContext(TodoContext);
                 className="date-input"
                 type="date"
                 min="2022-01-01"
-                // fix time zone bug
+                // TODO fix time zone bug
                 value={todoDeadline.toLocaleDateString("en-CA")}
                 onChange={deadlineChangeHandler}
               />

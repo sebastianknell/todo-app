@@ -1,5 +1,3 @@
-import { useState } from "react";
-
 function Checkbox(props) {
   let style = {
     height: "8px",

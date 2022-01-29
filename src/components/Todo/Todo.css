@@ -18,6 +18,8 @@
 }
 
 .todo-body {
+  display: flex;
+  width: 100%;
   user-select: none;
   margin-left: 0.25rem;
 }
