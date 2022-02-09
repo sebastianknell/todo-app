@@ -5,6 +5,13 @@ import Card from "../UI/Card";
 import Checkbox from "./Checkbox";
 import "./TodoCard.css";
 
+const getDate = (date) =>
+  date.getUTCFullYear() +
+  "-" +
+  String((date.getUTCMonth() + 1)).padStart(2, '0') +
+  "-" +
+  date.getUTCDate();
+
 function TodoCard(props) {
   const todoContext = useContext(TodoContext);
   const [completed, setCompleted] = useState(props.todo.completed)
@@ -16,7 +23,6 @@ function TodoCard(props) {
     props.todo.deadline || new Date()
   );
   const deadlineChangeHandler = (event) => {
-    console.log(event.target.value);
     setTodoDeadline(new Date(event.target.value));
   };
 
@@ -82,8 +88,7 @@ function TodoCard(props) {
                 className="date-input"
                 type="date"
                 min="2022-01-01"
-                // TODO fix time zone bug
-                value={todoDeadline.toLocaleDateString("en-CA")}
+                value={getDate(todoDeadline)}
                 onChange={deadlineChangeHandler}
               />
             </span>

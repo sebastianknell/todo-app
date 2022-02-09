@@ -28,7 +28,7 @@ function App() {
       id: 2,
       title: "Walk the dog",
       notes: "",
-      deadline: new Date("2022-01-16"),
+      deadline: new Date("2022-01-17"),
       completed: false,
       location: "Inbox",
     },
