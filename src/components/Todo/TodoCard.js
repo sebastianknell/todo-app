@@ -1,8 +1,11 @@
-import { useState, useRef, useContext, useEffect } from "react";
 import ReactDOM from "react-dom";
-import TodoContext from "../../store/todo-context";
+import { useState, useRef, useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { todoActions } from "../../store/todo-slice";
+
 import Card from "../UI/Card";
 import Checkbox from "./Checkbox";
+
 import "./TodoCard.css";
 
 const getDate = (date) =>
@@ -13,17 +16,18 @@ const getDate = (date) =>
   date.getUTCDate();
 
 function TodoCard(props) {
-  const todoContext = useContext(TodoContext);
   const [completed, setCompleted] = useState(props.todo.completed)
+  const dispatch = useDispatch();
+
   const handleCompleted = () => {
-    setCompleted((prevState) => !prevState)
+    setCompleted(prevState => !prevState);
   };
 
   const [todoDeadline, setTodoDeadline] = useState(
     props.todo.deadline || new Date()
   );
   const deadlineChangeHandler = (event) => {
-    setTodoDeadline(new Date(event.target.value));
+    setTodoDeadline(event.target.value);
   };
 
   const titleRef = useRef();
@@ -37,12 +41,15 @@ function TodoCard(props) {
   const closeHandler = () => {
     const newTitle = titleRef.current.value || "New To-Do";
     const newNotes = notesRef.current.value;
-    todoContext.updateTodo(props.todo.id, {
-      ...props.todo,
-      title: newTitle,
-      notes: newNotes,
-      completed: completed
-    });
+    dispatch(
+      todoActions.updateTodo({
+        ...props.todo,
+        title: newTitle,
+        notes: newNotes,
+        deadline: todoDeadline,
+        completed: completed,
+      })
+    );
     props.onClose();
   };
 
@@ -74,9 +81,9 @@ function TodoCard(props) {
           <div className="notes">
             <textarea
               placeholder="Notes"
-              ref={notesRef}
-              onChange={notesChangeHandler}
               defaultValue={props.todo.notes}
+              onChange={notesChangeHandler}
+              ref={notesRef}
             ></textarea>
           </div>
         </main>
@@ -88,7 +95,7 @@ function TodoCard(props) {
                 className="date-input"
                 type="date"
                 min="2022-01-01"
-                value={getDate(todoDeadline)}
+                value={getDate(new Date(todoDeadline))}
                 onChange={deadlineChangeHandler}
               />
             </span>

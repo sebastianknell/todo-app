@@ -1,60 +1,48 @@
-import { useState, useContext } from "react";
-import TodoContext from "../../store/todo-context";
+import { useSelector, useDispatch } from "react-redux";
+import { todoActions } from "../../store/todo-slice";
+import { uiActions } from "../../store/ui-slice";
+
 import Header from "./Header";
 import Footer from "./Footer";
 import Spacer from "../UI/Spacer";
 import Todo from "../Todo/Todo";
+
 import "./InboxView.css";
 
 function InboxView(props) {
-  const [selectedTodo, setSelectedTodo] = useState();
-  const [openedTodo, setOpenedTodo] = useState();
-
-  const ctx = useContext(TodoContext);
-
-  const updateSelectedTodo = (id) => {
-    setSelectedTodo((prevState) => {
-      if (openedTodo) setOpenedTodo(null);
-      if (prevState === id) return null;
-      return id;
-    });
-  };
+  const dispatch = useDispatch();
+  const todos = useSelector((state) => state.todo.todos);
+  const { selectedTodo, openedTodo } = useSelector((state) => state.ui);
 
   const handleTodoClick = (id) => {
-    updateSelectedTodo(id);
+    dispatch(uiActions.setSelectedTodo(id));
   };
 
   const handleTodoDoubleClick = (id) => {
-    setOpenedTodo(id);
+    dispatch(uiActions.setOpenedTodo(id));
   };
 
   const handleTodoClose = () => {
-    setOpenedTodo(null);
-  }
-
-  const handleTodoKeyDown = (id, key) => {
-    console.log(key);
-    const index = ctx.todos.findIndex((item) => item.id === id);
-    console.log(index)
-    if (key === "ArrowUp" && index > 0) setSelectedTodo(ctx.todos[index - 1].id);
-    if (key === "ArrowDown" && index < ctx.todos.length - 1)
-      setSelectedTodo(ctx.todos[index + 1].id);
+    dispatch(uiActions.setOpenedTodo(null));
   };
 
   const handleNewTodo = () => {
-    ctx.addTodo({
-      id: 3, // TODO use unique id
-      completed: false,
-      location: "Inbox"
-    });
-    setOpenedTodo(3); // TODO move to context
-  }
+    const id = 3; // TODO use unique id
+    dispatch(
+      todoActions.addTodo({
+        id: id,
+        completed: false,
+        location: "Inbox",
+      })
+    );
+    dispatch(uiActions.setOpenedTodo(id));
+  };
 
   return (
     <div className="inbox-view">
       <Header title="Inbox" />
       <div className="inbox-body">
-        {ctx.todos.map((item) => (
+        {todos.map((item) => (
           <Todo
             key={item.id}
             todo={item}
@@ -63,12 +51,11 @@ function InboxView(props) {
             onClick={handleTodoClick}
             onDoubleClick={handleTodoDoubleClick}
             onClose={handleTodoClose}
-            onKeyDown={handleTodoKeyDown}
           />
         ))}
       </div>
       <Spacer />
-      <Footer onNewTodo={handleNewTodo}/>
+      <Footer onNewTodo={handleNewTodo} />
     </div>
   );
 }

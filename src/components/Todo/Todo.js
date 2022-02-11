@@ -1,15 +1,15 @@
-import { useContext } from "react";
-import TodoContext from "../../store/todo-context";
+import { useDispatch } from "react-redux";
+import { todoActions } from "../../store/todo-slice";
 import Checkbox from "./Checkbox";
 import TodoCard from "./TodoCard";
 
 import "./Todo.css";
 
 function Todo(props) {
-  const todoContext = useContext(TodoContext);
+  const dispatch = useDispatch();
 
   const handleCompleted = () => {
-    todoContext.updateTodo(props.todo.id, {...props.todo, completed: !props.todo.completed})
+    dispatch(todoActions.completeTodo(props.todo.id));
   };
 
   if (props.opened) {
@@ -20,9 +20,6 @@ function Todo(props) {
     <div
       className={`todo ${props.highlighted && "highlight"}`}
       tabIndex="0"
-      onKeyDown={(e) => {
-        props.onKeyDown(props.todo.id, e.key);
-      }}
     >
       <Checkbox completed={props.todo.completed} onClick={handleCompleted} />
       <div
