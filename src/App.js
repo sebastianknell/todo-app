@@ -1,4 +1,6 @@
-import { useState } from "react";
+// import { useState } from "react";
+import { Routes, Route, Navigate } from "react-router-dom";
+
 import Sidebar from "./components/Sidebar/Sidebar";
 import InboxView from "./components/Views/InboxView";
 import TodayView from "./components/Views/TodayView";
@@ -6,20 +8,16 @@ import UpcomingView from "./components/Views/UpcomingView";
 import "./App.css";
 
 function App() {
-  const [selectedView, setSelectedView] = useState(0);
-
-  const selectViewHandler = (view) => {
-    setSelectedView(view);
-  };
-
-  // TODO  use React Router
-  const views = [<InboxView />, <TodayView />, <UpcomingView />];
-
   return (
     <div className="app">
-      <Sidebar onSelectView={selectViewHandler} />
+      <Sidebar />
       <div className="view">
-          {views[selectedView]}
+        <Routes>
+          <Route path="/" element={<Navigate to="/inbox"/>} />
+          <Route path="/inbox" element={<InboxView/>} />
+          <Route path="/today" element={<TodayView />} />
+          <Route path="/upcoming" element={<UpcomingView />} />
+        </Routes>
       </div>
     </div>
   );

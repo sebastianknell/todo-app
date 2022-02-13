@@ -9,7 +9,7 @@ function Checkbox(props) {
 
   return (
     <div
-      style={props.completed ? { ...style, backgroundColor: "#0465f5" } : style}
+      style={props.completed ? { ...style, backgroundColor: "#1959B6" } : style}
       onClick={props.onClick}
     ></div>
   );

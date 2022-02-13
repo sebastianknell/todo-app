@@ -1,11 +1,19 @@
 .sidebar-item{
+  display: block;
   font-size: 16px;
   font-weight: bold;
-  padding: 0.5rem 1rem;
-  /* background-color: tomato; */
+  color: black;
+  margin: 0.25rem 0.5rem;
+  padding: 0.25rem 1rem;
   cursor: pointer;
+  border-radius: 5px;
 }
 
-.sidebar-item:hover {
-  color: #b4b4b4;
+.sidebar-item:link, .sidebar-item:visited, .sidebar-item:active {
+  color: black;
+  text-decoration-line: none;
+}
+
+.active {
+  background-color: #b4b4b4;
 }

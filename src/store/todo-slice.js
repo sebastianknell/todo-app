@@ -48,7 +48,12 @@ export const todoSlice = createSlice({
       state.todos[index] = todo;
     },
 
-    removeTodo(state, action) {},
+    removeTodo(state, action) {
+      const id = action.payload;
+      // const index = state.todos.findIndex((item => item.id === id));
+      // delete state.todos[index];
+      state.todos = state.todos.filter(item => item.id !== id);
+    },
   },
 });
 

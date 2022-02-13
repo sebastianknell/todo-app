@@ -11,7 +11,7 @@ function Sidebar(props) {
       <div className="sidebar-list">
         {sidebarItems.map((item, index) => {
           return (
-            <SiderbarItem key={index} title={item} index={index} onClick={props.onSelectView} />
+            <SiderbarItem key={index} title={item} to={item.toLowerCase()} />
           );
         })}
       </div>

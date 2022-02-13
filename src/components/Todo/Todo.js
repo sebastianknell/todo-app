@@ -1,5 +1,7 @@
 import { useDispatch } from "react-redux";
 import { todoActions } from "../../store/todo-slice";
+
+import { BsThreeDots } from "react-icons/bs";
 import Checkbox from "./Checkbox";
 import TodoCard from "./TodoCard";
 
@@ -12,18 +14,19 @@ function Todo(props) {
     dispatch(todoActions.completeTodo(props.todo.id));
   };
 
+  const handleDelete = () => {
+    dispatch(todoActions.removeTodo(props.todo.id));
+  };
+
   if (props.opened) {
-    return <TodoCard todo={props.todo} onClose={props.onClose}/>;
+    return <TodoCard todo={props.todo} onClose={props.onClose} />;
   }
 
   return (
-    <div
-      className={`todo ${props.highlighted && "highlight"}`}
-      tabIndex="0"
-    >
+    <div className={`todo ${props.highlighted && "highlight"}`}>
       <Checkbox completed={props.todo.completed} onClick={handleCompleted} />
       <div
-        className="todo-body"
+        className={`todo-body ${props.todo.completed && "completed"}`}
         onClick={() => {
           props.onClick(props.todo.id);
         }}
@@ -31,6 +34,7 @@ function Todo(props) {
       >
         {props.todo.title}
       </div>
+      <BsThreeDots fontSize="18px" onClick={handleDelete} />
     </div>
   );
 }

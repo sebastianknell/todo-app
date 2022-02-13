@@ -4,6 +4,8 @@
   cursor: pointer;
   padding: 0.25rem 0.5rem;
   border-radius: 5px;
+  position: relative;
+  z-index: 30;
 }
 
 .todo.highlight {
@@ -22,4 +24,8 @@
   width: 100%;
   user-select: none;
   margin-left: 0.25rem;
+}
+
+.todo-body.completed {
+  color: gray;
 }

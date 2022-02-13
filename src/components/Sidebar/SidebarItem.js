@@ -1,10 +1,12 @@
-import './SidebarItem.css'
+import { NavLink } from "react-router-dom";
+
+import "./SidebarItem.css";
 
 function SiderbarItem(props) {
   return (
-    <div className="sidebar-item" onClick={() => props.onClick(props.index)}>
+    <NavLink className={({isActive}) => isActive ? "sidebar-item active" : "sidebar-item"} to={props.to}>
       {props.title}
-    </div>
+    </NavLink>
   );
 }
 

@@ -10,6 +10,7 @@ export const uiSlice = createSlice({
     setSelectedTodo(state, action) {
       const id = action.payload;
       state.selectedTodo = state.selectedTodo === id ? null : id;
+      if (state.openedTodo) state.openedTodo = null;
     },
     setOpenedTodo(state, action) {
       const id = action.payload;
