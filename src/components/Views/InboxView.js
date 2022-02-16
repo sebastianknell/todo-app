@@ -14,18 +14,6 @@ function InboxView(props) {
   const todos = useSelector((state) => state.todo.todos);
   const { selectedTodo, openedTodo } = useSelector((state) => state.ui);
 
-  const handleTodoClick = (id) => {
-    dispatch(uiActions.setSelectedTodo(id));
-  };
-
-  const handleTodoDoubleClick = (id) => {
-    dispatch(uiActions.setOpenedTodo(id));
-  };
-
-  const handleTodoClose = () => {
-    dispatch(uiActions.setOpenedTodo(null));
-  };
-
   const handleNewTodo = () => {
     const id = 3; // TODO use unique id
     dispatch(
@@ -48,9 +36,6 @@ function InboxView(props) {
             todo={item}
             highlighted={selectedTodo === item.id ? true : false}
             opened={openedTodo === item.id ? true : false}
-            onClick={handleTodoClick}
-            onDoubleClick={handleTodoDoubleClick}
-            onClose={handleTodoClose}
           />
         ))}
       </div>

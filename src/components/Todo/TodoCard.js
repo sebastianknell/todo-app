@@ -2,6 +2,7 @@ import ReactDOM from "react-dom";
 import { useState, useRef, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { todoActions } from "../../store/todo-slice";
+import { uiActions } from "../../store/ui-slice";
 
 import Card from "../UI/Card";
 import Checkbox from "./Checkbox";
@@ -30,6 +31,11 @@ function TodoCard(props) {
     setTodoDeadline(event.target.value);
   };
 
+  const [todoLocation, setTodoLocation] = useState(props.todo.location);
+  const locationChangeHandler = (event) => {
+    setTodoLocation(event.target.value)
+  }
+
   const titleRef = useRef();
 
   const notesRef = useRef();
@@ -48,13 +54,16 @@ function TodoCard(props) {
         notes: newNotes,
         deadline: todoDeadline,
         completed: completed,
+        location: todoLocation
       })
     );
-    props.onClose();
+    dispatch(uiActions.setOpenedTodo(null));
   };
 
   useEffect(() => {
     titleRef.current.focus();
+    notesRef.current.style.height = "auto";
+    notesRef.current.style.height = notesRef.current.scrollHeight + "px";
   }, []);
 
   return (
@@ -99,6 +108,14 @@ function TodoCard(props) {
                 onChange={deadlineChangeHandler}
               />
             </span>
+          </div>
+          {/* temporary. will change to custom view */}
+          <div className="selector">
+            <select value={todoLocation} onChange={locationChangeHandler}>
+              <option value="inbox">Inbox</option>
+              <option value="today">Today</option>
+              <option value="upcoming">Upcoming</option>
+            </select>
           </div>
         </footer>
       </Card>

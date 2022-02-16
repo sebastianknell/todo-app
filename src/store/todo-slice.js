@@ -7,7 +7,7 @@ const testTodos = [
     notes: "almond or soy",
     deadline: "2022-01-16",
     completed: false,
-    location: "Inbox",
+    location: "inbox",
   },
   {
     id: 2,
@@ -15,7 +15,7 @@ const testTodos = [
     notes: "",
     deadline: "2022-01-17",
     completed: false,
-    location: "Inbox",
+    location: "inbox",
   },
 ];
 

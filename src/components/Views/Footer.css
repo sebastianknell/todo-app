@@ -4,9 +4,8 @@
   font-size: 18px;
 }
 
-.icon-wrapper {
+.icon-enabled {
   cursor: pointer;
-  /* border-right: 1px black solid; */
   padding: 0.25rem 0;
   display: flex;
   justify-content: center;
@@ -14,11 +13,16 @@
   color: rgb(70, 70, 70);
 }
 
-.icon-wrapper:hover {
-  border-radius: 5px;
-  background-color: rgb(204, 204, 204);
+.icon-disabled {
+  cursor: default;
+  padding: 0.25rem 0;
+  display: flex;
+  justify-content: center;
+  flex-grow: 2;
+  color: rgb(116, 116, 116);
 }
 
-.no-border {
-  border-right: none;
+.icon-enabled:hover {
+  border-radius: 5px;
+  background-color: rgb(204, 204, 204);
 }

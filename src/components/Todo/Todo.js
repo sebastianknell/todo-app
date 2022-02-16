@@ -1,5 +1,6 @@
 import { useDispatch } from "react-redux";
 import { todoActions } from "../../store/todo-slice";
+import { uiActions } from "../../store/ui-slice";
 
 import { BsThreeDots } from "react-icons/bs";
 import Checkbox from "./Checkbox";
@@ -10,31 +11,37 @@ import "./Todo.css";
 function Todo(props) {
   const dispatch = useDispatch();
 
-  const handleCompleted = () => {
+  const completedHandler = () => {
     dispatch(todoActions.completeTodo(props.todo.id));
   };
 
-  const handleDelete = () => {
+  const clickHandler = () => {
+    dispatch(uiActions.setSelectedTodo(props.todo.id));
+  }
+
+  const doubleClickHandler = () => {
+    dispatch(uiActions.setOpenedTodo(props.todo.id));
+  }
+
+  const deleteHandler = () => {
     dispatch(todoActions.removeTodo(props.todo.id));
   };
 
   if (props.opened) {
-    return <TodoCard todo={props.todo} onClose={props.onClose} />;
+    return <TodoCard todo={props.todo} />;
   }
 
   return (
     <div className={`todo ${props.highlighted && "highlight"}`}>
-      <Checkbox completed={props.todo.completed} onClick={handleCompleted} />
+      <Checkbox completed={props.todo.completed} onClick={completedHandler} />
       <div
         className={`todo-body ${props.todo.completed && "completed"}`}
-        onClick={() => {
-          props.onClick(props.todo.id);
-        }}
-        onDoubleClick={() => props.onDoubleClick(props.todo.id)}
+        onClick={clickHandler}
+        onDoubleClick={doubleClickHandler}
       >
         {props.todo.title}
       </div>
-      <BsThreeDots fontSize="18px" onClick={handleDelete} />
+      <BsThreeDots className="btn" fontSize="18px" onClick={deleteHandler} />
     </div>
   );
 }
