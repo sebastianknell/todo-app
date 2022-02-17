@@ -13,7 +13,7 @@ function App() {
       <Sidebar />
       <div className="view">
         <Routes>
-          <Route path="/" element={<Navigate to="/inbox"/>} />
+          <Route path="/" element={<Navigate replace to="/inbox"/>} />
           <Route path="/inbox" element={<InboxView/>} />
           <Route path="/today" element={<TodayView />} />
           <Route path="/upcoming" element={<UpcomingView />} />

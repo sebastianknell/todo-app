@@ -16,6 +16,7 @@ code {
 .btn {
   border-radius: 5px;
   padding: 0.15rem;
+  cursor: pointer;
 }
 
 .btn:hover, .btn:active {

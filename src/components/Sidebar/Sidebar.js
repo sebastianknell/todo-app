@@ -16,7 +16,7 @@ function Sidebar(props) {
         })}
       </div>
       <Spacer/>
-      <div className="sidebar-item">Settings</div>
+      <SiderbarItem title="Settings" to="settings"></SiderbarItem>
     </div>
   );
 }

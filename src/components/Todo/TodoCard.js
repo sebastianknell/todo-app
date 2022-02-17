@@ -68,6 +68,7 @@ function TodoCard(props) {
 
   return (
     <>
+      {/* TODO try moving to component */}
       {ReactDOM.createPortal(
         <div className="backdrop" onClick={closeHandler} />,
         document.getElementById("overlays")

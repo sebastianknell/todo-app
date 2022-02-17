@@ -1,3 +1,26 @@
+.tooltip {
+  position: absolute;
+  bottom: 3.5rem;
+  font-size: 14px;
+  border-radius: 5px;
+  padding: 0.5rem;
+  max-width: 10rem;
+  visibility: hidden;
+}
+
+@keyframes fade-in {
+   0% {opacity: 0;}
+   100% {opacity: 1;}
+} 
+
+.tooltip-title {
+  font-weight: bold;
+}
+
+.tooltip-message {
+  color: gray;
+}
+
 .footer {
   display: flex;
   justify-content: space-evenly;
@@ -11,6 +34,7 @@
   justify-content: center;
   flex-grow: 2;
   color: rgb(70, 70, 70);
+  border-radius: 5px;
 }
 
 .icon-disabled {
@@ -23,6 +47,11 @@
 }
 
 .icon-enabled:hover {
-  border-radius: 5px;
-  background-color: rgb(204, 204, 204);
+  margin: -1px;
+  border: 1px rgb(200, 200, 200) solid;
+}
+
+.icon-enabled:hover .tooltip {
+  visibility: visible;
+  animation: fade-in 0.5s ease-out;
 }

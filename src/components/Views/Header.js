@@ -1,4 +1,3 @@
-import { FaSearch } from "react-icons/fa";
 import Spacer from "../UI/Spacer";
 
 function Header(props) {
@@ -13,7 +12,6 @@ function Header(props) {
     <div style={headerStyle}>
       <div>{props.title}</div>
       <Spacer />
-      <FaSearch cursor={"pointer"}/>
     </div>
   );
 }
