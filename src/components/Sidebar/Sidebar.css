@@ -3,7 +3,8 @@
   flex-direction: column;
   height: 100vh;
   min-width: 12rem;
-  background-color: #F7F8F9;
+  background-color: #F8F9FA;
+  border-right: 1px #f0f3f6 solid;
   overflow: scroll;
 }
 

@@ -69,16 +69,14 @@ function TodoCard(props) {
   return (
     <>
       {/* TODO try moving to component */}
+      {/* TODO try this instead https://stackoverflow.com/a/45323523 */}
       {ReactDOM.createPortal(
         <div className="backdrop" onClick={closeHandler} />,
         document.getElementById("overlays")
       )}
       <Card className="todo-card">
         <header className="todo-header">
-          <Checkbox
-            completed={completed}
-            onClick={handleCompleted}
-          />
+          <Checkbox completed={completed} onClick={handleCompleted} />
           <div className="todo-title">
             <input
               placeholder="New To-Do"

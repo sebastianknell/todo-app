@@ -1,4 +1,4 @@
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { todoActions } from "../../store/todo-slice";
 import { uiActions } from "../../store/ui-slice";
 
@@ -10,6 +10,8 @@ import "./Todo.css";
 
 function Todo(props) {
   const dispatch = useDispatch();
+  const { selectedTodo, openedTodo } = useSelector((state) => state.ui);
+  const highlighted = selectedTodo === props.todo.id;
 
   const completedHandler = () => {
     dispatch(todoActions.completeTodo(props.todo.id));
@@ -27,12 +29,12 @@ function Todo(props) {
     dispatch(todoActions.removeTodo(props.todo.id));
   };
 
-  if (props.opened) {
+  if (openedTodo === props.todo.id) {
     return <TodoCard todo={props.todo} />;
   }
 
   return (
-    <div className={`todo ${props.highlighted && "highlight"}`}>
+    <div className={`todo ${highlighted && "highlight"}`}>
       <Checkbox completed={props.todo.completed} onClick={completedHandler} />
       <div
         className={`todo-body ${props.todo.completed && "completed"}`}

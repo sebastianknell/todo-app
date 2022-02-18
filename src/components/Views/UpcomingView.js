@@ -1,5 +1,7 @@
+import View from "./View";
+
 function UpcomingView() {
-  return <div>upcoming</div>;
+  return <View title="Upcoming"></View>;
 }
 
 export default UpcomingView;
