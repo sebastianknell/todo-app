@@ -24,10 +24,11 @@
 
 .footer {
   display: flex;
+  width: 100%;
   justify-content: space-evenly;
   font-size: 18px;
   margin: 0 25%;
-  margin-bottom: 0.5rem;
+  padding: 0.25rem 0;
 }
 
 .icon-enabled {
@@ -51,11 +52,11 @@
 
 .icon-enabled:hover {
   margin: -1px;
-  border: 1px rgb(200, 200, 200) solid;
+  border: 1px #dfe2e7 solid;
 }
 
 .icon-enabled:active {
-  background-color: rgb(200, 200, 200);
+  background-color: #e0e3e6;
 }
 
 .icon-enabled:hover .tooltip {

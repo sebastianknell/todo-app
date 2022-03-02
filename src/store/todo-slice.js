@@ -1,39 +1,47 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const testTodos = [
+const testAreas = [
   {
     id: 1,
-    title: "Buy milk",
-    notes: "almond or soy",
-    deadline: "2022-01-16",
-    completed: false,
-    location: "inbox",
+    name: "Home",
+    projects: [],
   },
   {
     id: 2,
-    title: "Walk the dog",
-    notes: "",
-    deadline: "2022-01-17",
-    completed: false,
-    location: "inbox",
+    name: "Work",
+    projects: [
+      {
+        id: 1,
+        name: "To-Do app",
+        notes: "",
+        date: "",
+        deadline: "",
+      },
+    ],
   },
 ];
 
 export const todoSlice = createSlice({
   name: "todo-slice",
   initialState: {
-    todos: testTodos,
+    todos: [],
+    areas: testAreas,
   },
   reducers: {
+    replaceTodos(state, action) {
+      state.todos = action.payload;
+    },
+
     addTodo(state, action) {
       const todo = action.payload;
-      state.todos.push({
-        id: todo.id,
-        title: todo.title || "",
-        notes: todo.notes || "",
-        completed: todo.completed || false,
-        location: todo.location,
-      });
+      state.todos.push(todo);
+    },
+
+    addTodos(state, action) {
+      const todos = action.payload;
+      for (let todo of todos) {
+        state.todos.push(todo)
+      }
     },
 
     completeTodo(state, action) {
@@ -50,9 +58,7 @@ export const todoSlice = createSlice({
 
     removeTodo(state, action) {
       const id = action.payload;
-      // const index = state.todos.findIndex((item => item.id === id));
-      // delete state.todos[index];
-      state.todos = state.todos.filter(item => item.id !== id);
+      state.todos = state.todos.filter((item) => item.id !== id);
     },
   },
 });

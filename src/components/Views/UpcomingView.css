@@ -1,0 +1,43 @@
+.day-view {
+  display: flex;
+  flex-direction: column;
+  min-height: 4rem;
+  margin: 1rem 0.5rem;
+}
+
+.date-header {
+  display: flex;
+  align-items: baseline;
+  width: 100%;
+}
+
+.date-number {
+  font-size: 24px;
+  font-weight: bold;
+  display: inline;
+}
+
+.date-weekday {
+  display: flex;
+  flex-grow: 2;
+  font-size: 16px;
+  font-weight: bold;
+  color: gray;
+  margin: 0 0.5rem;
+}
+
+.month-name {
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.month-days {
+  font-weight: bold;
+  font-size: 16px;
+  color: gray;
+  margin-left: 0.5rem;
+}
+
+.top-line {
+  border-top: 1px #dfe2e7 solid;
+}

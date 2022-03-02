@@ -6,6 +6,7 @@ function Header(props) {
     padding: "0.5rem",
     fontSize: "18px",
     fontWeight: "bold",
+    color: "#2a2d34"
   };
 
   return (

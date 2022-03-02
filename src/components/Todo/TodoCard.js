@@ -1,40 +1,36 @@
 import ReactDOM from "react-dom";
 import { useState, useRef, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { todoActions } from "../../store/todo-slice";
+import { updateTodo } from "../../store/todo-api";
+import { removeTodo } from "../../store/todo-api";
+// import { todoActions } from "../../store/todo-slice";
 import { uiActions } from "../../store/ui-slice";
+import { isEmpty } from "../../utils/todo-utils";
+import { getDate } from "../../utils/date-utils";
 
 import Card from "../UI/Card";
 import Checkbox from "./Checkbox";
 
 import "./TodoCard.css";
 
-const getDate = (date) =>
-  date.getUTCFullYear() +
-  "-" +
-  String((date.getUTCMonth() + 1)).padStart(2, '0') +
-  "-" +
-  date.getUTCDate();
-
 function TodoCard(props) {
-  const [completed, setCompleted] = useState(props.todo.completed)
   const dispatch = useDispatch();
 
-  const handleCompleted = () => {
-    setCompleted(prevState => !prevState);
-  };
-
-  const [todoDeadline, setTodoDeadline] = useState(
-    props.todo.deadline || new Date()
+  const [completed, setCompleted] = useState(props.todo.completed);
+  const [todoDate, setTodoDate] = useState(
+    props.todo.date ? getDate(new Date(props.todo.date)) : ""
   );
-  const deadlineChangeHandler = (event) => {
-    setTodoDeadline(event.target.value);
-  };
-
-  const [todoLocation, setTodoLocation] = useState(props.todo.location);
-  const locationChangeHandler = (event) => {
-    setTodoLocation(event.target.value)
-  }
+  const [todoDeadline, setTodoDeadline] = useState(
+    props.todo.deadline ? getDate(new Date(props.todo.deadline)) : ""
+  );
+  const [todoLocation, setTodoLocation] = useState(
+    props.todo.inbox
+      ? "inbox"
+      : props.todo.projectId
+      ? props.todo.projectId
+      : "no-project"
+  );
+  const [hasChanged, setHasChanged] = useState(false);
 
   const titleRef = useRef();
 
@@ -44,27 +40,61 @@ function TodoCard(props) {
     notesRef.current.style.height = notesRef.current.scrollHeight + "px";
   };
 
-  const closeHandler = () => {
-    const newTitle = titleRef.current.value || "New To-Do";
-    const newNotes = notesRef.current.value;
-    dispatch(
-      todoActions.updateTodo({
-        ...props.todo,
-        title: newTitle,
-        notes: newNotes,
-        deadline: todoDeadline,
-        completed: completed,
-        location: todoLocation
-      })
-    );
-    dispatch(uiActions.setOpenedTodo(null));
-  };
-
   useEffect(() => {
     titleRef.current.focus();
     notesRef.current.style.height = "auto";
     notesRef.current.style.height = notesRef.current.scrollHeight + "px";
   }, []);
+
+  const handleCompleted = () => {
+    setCompleted((prevState) => !prevState);
+    setHasChanged(true);
+  };
+
+  const dateChangeHandler = (event) => {
+    console.log(event.target.value);
+    setTodoDate(event.target.value);
+    setHasChanged(true);
+  };
+
+  const deadlineChangeHandler = (event) => {
+    setTodoDeadline(event.target.value);
+    setHasChanged(true);
+  };
+
+  const locationChangeHandler = (event) => {
+    setTodoLocation(event.target.value);
+    if (event.target.value === "inbox") setTodoDate("");
+    setHasChanged(true);
+  };
+
+  const closeHandler = () => {
+    const newTitle = titleRef.current.value;
+    const newNotes = notesRef.current.value;
+    const shouldUpdate =
+      hasChanged ||
+      newTitle !== props.todo.title ||
+      newNotes !== props.todo.notes;
+
+    const updatedTodo = {
+      ...props.todo,
+      title: newTitle === "" ? null : newTitle,
+      notes: newNotes === "" ? null : newNotes,
+      date: todoDate === "" ? null : todoDate,
+      deadline: todoDeadline === "" ? null : todoDeadline,
+      completed: completed,
+      inbox: todoLocation === "inbox" && !todoDate,
+    };
+
+    if (isEmpty(updatedTodo)) {
+      dispatch(removeTodo(props.todo.id));
+    }
+    else if (shouldUpdate) {
+      dispatch(updateTodo(updatedTodo));
+    } 
+  
+    dispatch(uiActions.setOpenedTodo(null));
+  };
 
   return (
     <>
@@ -97,13 +127,28 @@ function TodoCard(props) {
         </main>
         <footer>
           <div>
-            <span className="footer-title">Deadline</span>
+            <label htmlFor="date" className="footer-title">
+              Date
+            </label>
+            <input
+              id="date"
+              className="date-input"
+              type="date"
+              min={new Date().toLocaleDateString("en-CA")}
+              value={todoDate}
+              onChange={dateChangeHandler}
+            />
+          </div>
+          <div>
+            <label htmlFor="deadline" className="footer-title">
+              Deadline
+            </label>
             <span>
               <input
+                id="deadline"
                 className="date-input"
                 type="date"
-                min="2022-01-01"
-                value={getDate(new Date(todoDeadline))}
+                value={todoDeadline}
                 onChange={deadlineChangeHandler}
               />
             </span>
@@ -112,8 +157,7 @@ function TodoCard(props) {
           <div className="selector">
             <select value={todoLocation} onChange={locationChangeHandler}>
               <option value="inbox">Inbox</option>
-              <option value="today">Today</option>
-              <option value="upcoming">Upcoming</option>
+              <option value="no-project">No Project</option>
             </select>
           </div>
         </footer>

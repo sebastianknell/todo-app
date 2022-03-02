@@ -1,5 +1,6 @@
-import { useState } from "react";
+// import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { addTodo } from "../../store/todo-api";
 import { todoActions } from "../../store/todo-slice";
 import { uiActions } from "../../store/ui-slice";
 
@@ -26,28 +27,11 @@ function Tooltip(props) {
 
 function Footer(props) {
   const dispatch = useDispatch();
-  const [showingTooltip, setShowingTooltip] = useState(false);
   const selectedTodo = useSelector((state) => state.ui.selectedTodo);
   const iconClass = selectedTodo === null ? "icon-disabled" : "icon-enabled";
 
-  const showTooltip = () => {
-    setShowingTooltip(true);
-  };
-
-  const hideTooltip = () => {
-    setShowingTooltip(false);
-  };
-
   const handleNewTodo = () => {
-    const id = 3; // TODO use unique id
-    dispatch(
-      todoActions.addTodo({
-        id: id,
-        completed: false,
-        location: "Inbox",
-      })
-    );
-    dispatch(uiActions.setOpenedTodo(id));
+    dispatch(addTodo());
   };
 
   return (
@@ -57,7 +41,10 @@ function Footer(props) {
         <FaPlus />
       </div>
       <div className={iconClass}>
-        <Tooltip title="Set Date" message="Decide when to start. Today or later?" />
+        <Tooltip
+          title="Set Date"
+          message="Decide when to start. Today or later?"
+        />
         <FaRegCalendar />
       </div>
       <div className={iconClass}>

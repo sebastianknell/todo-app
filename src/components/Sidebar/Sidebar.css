@@ -3,8 +3,8 @@
   flex-direction: column;
   height: 100vh;
   min-width: 12rem;
-  background-color: #F8F9FA;
-  border-right: 1px #f0f3f6 solid;
+  background-color: #f9fafb;
+  border-right: 1px #eceeef solid;
   overflow: scroll;
 }
 
@@ -12,4 +12,16 @@
   list-style: none;
   padding: 0;
   margin: 0;
+  margin-bottom: 2rem;
+}
+
+.sidebar-actions {
+  height: 35px;
+  box-sizing: border-box;
+  font-size: 16px;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  border-radius: 5px;
+  color: #3b4045;
+  border-top: 1px #eceeef solid;
 }

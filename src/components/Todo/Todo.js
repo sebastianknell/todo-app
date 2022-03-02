@@ -1,4 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
+import { completeTodo } from "../../store/todo-api";
+import { removeTodo } from "../../store/todo-api";
 import { todoActions } from "../../store/todo-slice";
 import { uiActions } from "../../store/ui-slice";
 
@@ -14,7 +16,7 @@ function Todo(props) {
   const highlighted = selectedTodo === props.todo.id;
 
   const completedHandler = () => {
-    dispatch(todoActions.completeTodo(props.todo.id));
+    dispatch(completeTodo(props.todo.id, !props.todo.completed));
   };
 
   const clickHandler = () => {
@@ -26,7 +28,7 @@ function Todo(props) {
   }
 
   const deleteHandler = () => {
-    dispatch(todoActions.removeTodo(props.todo.id));
+    dispatch(removeTodo(props.todo.id));
   };
 
   if (openedTodo === props.todo.id) {

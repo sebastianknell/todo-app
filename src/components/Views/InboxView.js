@@ -9,14 +9,14 @@ import "./InboxView.css";
 function InboxView(props) {
   const allTodos = useSelector((state) => state.todo.todos);
   const todos = useMemo(
-    () => allTodos.filter((item) => item.location === "inbox"),
+    () => allTodos.filter((item) => !!item.inbox && !item.completed),
     [allTodos]
   );
 
   return (
     <View title="Inbox">
-      {todos.map((item) => (
-        <Todo key={item.id} todo={item} />
+      {todos.map((todo) => (
+        <Todo key={todo.id} todo={todo} />
       ))}
     </View>
   );
