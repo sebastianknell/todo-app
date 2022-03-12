@@ -1,12 +1,12 @@
 :root {
-  --gray1: #f2f3f4
-  --gray2: #edeff1
-  --gray3: #dfe2e7
-  --gray4: #f8f9fa
-  --gray5: #e6e8eb
-  --gray6: #e0e3e6
-  --black1: #373c40
-  --black2: #25282d
+  --gray1: #f2f3f4;
+  --gray2: #edeff1;
+  --gray3: #dfe2e7;
+  --gray4: #f8f9fa;
+  --gray5: #e6e8eb;
+  --gray6: #e0e3e6;
+  --black1: #373c40;
+  --black2: #25282d;
 }
 
 body {
@@ -26,11 +26,17 @@ code {
 
 .btn {
   border-radius: 5px;
-  padding: 0.15rem;
+  padding: 0.25rem;
+  color: #64696E;
   cursor: pointer;
+  border: 1px solid transparent;
 }
 
-.btn:hover, .btn:active {
+.btn:hover {
+  border: 1px solid #dfe2e7;
+}
+
+.btn:active {
   background-color: #e0e3e6;
 }
 

@@ -1,5 +1,4 @@
 import Header from "./Header";
-import Spacer from "../UI/Spacer";
 
 import "./View.css";
 

@@ -2,8 +2,12 @@ import { useMemo } from "react";
 import { useSelector } from "react-redux";
 import { getDate } from "../../utils/date-utils";
 
-import View from "./View";
+import View from "./shared/View";
 import Todo from "../Todo/Todo";
+
+const today = new Date(
+  new Date(new Date().setUTCDate(new Date().getDate())).setUTCHours(0, 0, 0, 0)
+);
 
 function TodayView() {
   const allTodos = useSelector((state) => state.todo.todos);
@@ -11,7 +15,7 @@ function TodayView() {
     () =>
       allTodos.filter(
         (item) =>
-          getDate(new Date(item.date)) === getDate(new Date()) &&
+          getDate(new Date(item.date)) === getDate(today) &&
           !item.completed
       ),
     [allTodos]

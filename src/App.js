@@ -4,7 +4,7 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import { fetchTodos } from "./store/todo-api";
 
 import Sidebar from "./components/Sidebar/Sidebar";
-import Footer from "./components/Views/Footer";
+import Footer from "./components/Footer/Footer";
 import InboxView from "./components/Views/InboxView";
 import TodayView from "./components/Views/TodayView";
 import UpcomingView from "./components/Views/UpcomingView";
@@ -23,7 +23,7 @@ function App() {
   return (
     <div className="app">
       <Sidebar />
-      <div className="view-wrapper">
+      <div className="col grow">
         <div className="view">
           <Routes>
             <Route path="/" element={<Navigate replace to="/inbox" />} />
@@ -33,7 +33,7 @@ function App() {
             <Route path="/anytime" element={<AnytimeView />} />
             <Route path="/someday" element={<SomedayView />} />
             <Route path="/logbook" element={<LogbookView />} />
-            <Route path="*" element={<Navigate replace to="/inbox" />} />
+            {/* <Route path="*" element={<Navigate replace to="/inbox" />} /> */}
           </Routes>
         </div>
         <div className="row grow" id="footer">

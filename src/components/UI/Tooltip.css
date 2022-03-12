@@ -1,0 +1,18 @@
+/* TODO check positioning */
+.tooltip {
+  position: absolute;
+  bottom: 3rem;
+  font-size: 14px;
+  border-radius: 5px;
+  padding: 0.5rem;
+  max-width: 10rem;
+  visibility: hidden;
+}
+
+.tooltip-title {
+  font-weight: bold;
+}
+
+.tooltip-message {
+  color: gray;
+}

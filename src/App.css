@@ -2,16 +2,10 @@
   display: flex;
 }
 
-.view-wrapper {
-  display: flex;
-  flex-grow: 2;
-  flex-direction: column;
-}
-
 .view {
   /* TODO see better approach */
   display: block;
-  height: calc(100vh - 35px);
+  height: calc(100vh - 37px);
   overflow-y: scroll;
 }
 

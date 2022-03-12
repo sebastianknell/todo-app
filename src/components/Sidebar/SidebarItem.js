@@ -16,7 +16,7 @@ function SiderbarItem(props) {
         }
         to={props.to}
       >
-        {props.title}
+        {props.children}
       </NavLink>
     </li>
   );

@@ -15,7 +15,7 @@ import "./TodoCard.css";
 
 function TodoCard(props) {
   const dispatch = useDispatch();
-
+  // console.log(props.todo)
   const [completed, setCompleted] = useState(props.todo.completed);
   const [todoDate, setTodoDate] = useState(
     props.todo.date ? getDate(new Date(props.todo.date)) : ""
@@ -52,7 +52,6 @@ function TodoCard(props) {
   };
 
   const dateChangeHandler = (event) => {
-    console.log(event.target.value);
     setTodoDate(event.target.value);
     setHasChanged(true);
   };

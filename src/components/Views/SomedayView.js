@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 import { useSelector } from "react-redux";
 
-import View from "./View";
+import View from "./shared/View";
 import Todo from "../Todo/Todo";
 
 export default function SomedayView() {

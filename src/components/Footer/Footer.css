@@ -1,26 +1,7 @@
-/* TODO check positioning */
-.tooltip {
-  position: absolute;
-  bottom: 3rem;
-  font-size: 14px;
-  border-radius: 5px;
-  padding: 0.5rem;
-  max-width: 10rem;
-  visibility: hidden;
-}
-
 @keyframes fade-in {
    0% {opacity: 0;}
    100% {opacity: 1;}
 } 
-
-.tooltip-title {
-  font-weight: bold;
-}
-
-.tooltip-message {
-  color: gray;
-}
 
 .footer {
   display: flex;
@@ -33,26 +14,34 @@
 
 .icon-enabled {
   cursor: pointer;
-  padding: 0.25rem 0;
+  padding: 0.25rem;
+  font-size: 18px;
   display: flex;
   justify-content: center;
+  align-items: center;
   flex-grow: 2;
-  color: rgb(70, 70, 70);
+  color: #64696E;
   border-radius: 5px;
+  border: 1px solid transparent;
+  background-color: white;
 }
 
 .icon-disabled {
   cursor: default;
-  padding: 0.25rem 0;
+  padding: 0.25rem;
+  font-size: 18px;
   display: flex;
   justify-content: center;
+  align-items: center;
   flex-grow: 2;
-  color: rgb(116, 116, 116);
+  color: #ccced1;
+  border-radius: 5px;
+  border: 1px solid transparent;
+  background-color: white;
 }
 
 .icon-enabled:hover {
-  margin: -1px;
-  border: 1px #dfe2e7 solid;
+  border: 1px solid #dfe2e7;
 }
 
 .icon-enabled:active {

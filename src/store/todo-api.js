@@ -13,6 +13,7 @@ export const fetchTodos = () => async (dispatch) => {
   if (res.ok) {
     const todos = await res.json();
     dispatch(todoActions.addTodos(todos));
+    console.log(todos);
   }
 };
 

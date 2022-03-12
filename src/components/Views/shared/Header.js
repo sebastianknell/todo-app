@@ -1,4 +1,4 @@
-import Spacer from "../UI/Spacer";
+import Spacer from "../../UI/Spacer";
 
 function Header(props) {
   const headerStyle = {

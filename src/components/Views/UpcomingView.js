@@ -2,19 +2,26 @@ import { useMemo } from "react";
 import { useSelector } from "react-redux";
 import { getDate } from "../../utils/date-utils";
 
-import View from "./View";
+import View from "./shared/View";
 import Todo from "../Todo/Todo";
 
 import "./UpcomingView.css";
 
 const nextDays = [];
 const nextMonths = [];
-const today = new Date();
+const now = new Date();
+const today = new Date(
+  new Date(new Date().setUTCDate(now.getDate())).setUTCHours(0, 0, 0, 0)
+);
 for (let i = 1; i <= 7; i++) {
-  nextDays.push(new Date(new Date().setDate(today.getDate() + i)));
+  nextDays.push(
+    new Date(
+      new Date(new Date().setUTCDate(now.getDate() + i)).setUTCHours(0, 0, 0, 0)
+    )
+  );
 }
-for (let i = 1; i <= 4; i++) {
-  nextMonths.push(new Date(new Date().setMonth(today.getMonth() + i)));
+for (let i = 0; i < 4; i++) {
+  nextMonths.push(new Date(new Date().setMonth(now.getMonth() + i)));
 }
 
 function DayView(props) {
@@ -42,9 +49,9 @@ function MonthView(props) {
           <span className="month-days">{`${props.first}-${props.last}`}</span>
         )}
       </div>
-      {/* {props.todos.map((todo) => (
+      {props.todos.map((todo) => (
         <Todo key={todo.id} todo={todo} />
-      ))} */}
+      ))}
     </div>
   );
 }
@@ -53,36 +60,43 @@ function UpcomingView() {
   const allTodos = useSelector((state) => state.todo.todos);
   const todos = useMemo(
     () =>
-      allTodos.filter(
-        (item) => new Date(item.date) > new Date() && !item.completed
-      ),
+      allTodos.filter((item) => new Date(item.date) > today && !item.completed),
     [allTodos]
   );
+  console.log(todos);
 
   return (
     <View title="Upcoming">
       {nextDays.map((date, index) => (
         <DayView
           key={index}
-          date={date.getDate()}
+          date={date.getUTCDate()}
           weekday={new Intl.DateTimeFormat("en-US", { weekday: "long" }).format(
             date
           )}
-          todos={todos.filter((todo) => {
-            return getDate(new Date(todo.date)) === getDate(date);
-          })}
+          todos={todos.filter(
+            (todo) => new Date(todo.date).valueOf() === date.valueOf()
+          )}
         />
       ))}
       {nextMonths.map((date, index) => {
+        const day7 = nextDays[nextDays.length - 1];
+        const thisMonthTodos = todos.filter(
+          (todo) =>
+            new Date(todo.date).getMonth() === date.getMonth() &&
+            new Date(todo.date).getDate() > day7.getDate()
+        );
         if (index === 0) {
+          const lastDay = new Date(day7.getFullYear(), day7.getMonth() + 1, 0);
           return (
             <MonthView
               key={index}
               month={new Intl.DateTimeFormat("en-US", { month: "long" }).format(
                 date
               )}
-              first="7"
-              last="31"
+              first={day7.getUTCDate() + 1}
+              last={lastDay.getUTCDate()}
+              todos={thisMonthTodos}
             />
           );
         }
@@ -92,6 +106,7 @@ function UpcomingView() {
             month={new Intl.DateTimeFormat("en-US", { month: "long" }).format(
               date
             )}
+            todos={thisMonthTodos}
           />
         );
       })}

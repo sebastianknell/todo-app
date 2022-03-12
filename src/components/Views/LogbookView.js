@@ -2,7 +2,7 @@ import { useMemo, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchCompletedTodos } from "../../store/todo-api";
 
-import View from "./View";
+import View from "./shared/View";
 import Todo from "../Todo/Todo";
 
 import "./InboxView.css";

@@ -1,0 +1,50 @@
+.sidebar-area-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.sidebar-area-item-head {
+  display: flex;
+  align-items: center;
+}
+
+.sidebar-area-item-head span {
+  margin-left: 0.25rem;
+}
+
+.sidebar-area-item-arrow {
+  visibility: hidden;
+}
+
+.sidebar-area-item:hover .sidebar-area-item-arrow {
+  visibility: visible;
+}
+
+@keyframes rotate-right {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(90deg);
+  }
+}
+
+@keyframes rotate-left {
+  0% {
+    transform: rotate(90deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+.rotating-right {
+  animation: rotate-right 0.1s ease-out;
+  animation-fill-mode: forwards;
+}
+
+.rotating-left {
+  animation: rotate-left 0.1s ease-out;
+  animation-fill-mode: forwards;
+}
