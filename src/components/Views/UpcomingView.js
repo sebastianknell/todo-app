@@ -1,28 +1,36 @@
 import { useMemo } from "react";
 import { useSelector } from "react-redux";
-import { getDate } from "../../utils/date-utils";
+import { groupBy } from "lodash";
 
 import View from "./shared/View";
 import Todo from "../Todo/Todo";
 
 import "./UpcomingView.css";
 
-const nextDays = [];
-const nextMonths = [];
-const now = new Date();
-const today = new Date(
-  new Date(new Date().setUTCDate(now.getDate())).setUTCHours(0, 0, 0, 0)
-);
-for (let i = 1; i <= 7; i++) {
-  nextDays.push(
-    new Date(
-      new Date(new Date().setUTCDate(now.getDate() + i)).setUTCHours(0, 0, 0, 0)
-    )
+const getUpcomingDates = () => {
+  const nextDays = [];
+  const nextMonths = [];
+  const now = new Date();
+  const today = new Date(
+    new Date(new Date().setUTCDate(now.getDate())).setUTCHours(0, 0, 0, 0)
   );
-}
-for (let i = 0; i < 4; i++) {
-  nextMonths.push(new Date(new Date().setMonth(now.getMonth() + i)));
-}
+  for (let i = 1; i <= 7; i++) {
+    nextDays.push(
+      new Date(
+        new Date(new Date().setUTCDate(now.getDate() + i)).setUTCHours(
+          0,
+          0,
+          0,
+          0
+        )
+      )
+    );
+  }
+  for (let i = 0; i < 4; i++) {
+    nextMonths.push(new Date(new Date().setMonth(now.getMonth() + i)));
+  }
+  return { today, nextDays, nextMonths };
+};
 
 function DayView(props) {
   const date = props.date.toString().padStart(2, "0");
@@ -39,12 +47,12 @@ function DayView(props) {
   );
 }
 
-function MonthView(props) {
+function ListView(props) {
   const showDays = props.first && props.last;
   return (
     <div className="day-view">
       <div className="date-header top-line">
-        <span className="month-name">{props.month}</span>
+        <span className="month-name">{props.title}</span>
         {showDays && (
           <span className="month-days">{`${props.first}-${props.last}`}</span>
         )}
@@ -57,13 +65,26 @@ function MonthView(props) {
 }
 
 function UpcomingView() {
+  const { today, nextDays, nextMonths } = getUpcomingDates();
+
   const allTodos = useSelector((state) => state.todo.todos);
   const todos = useMemo(
     () =>
-      allTodos.filter((item) => new Date(item.date) > today && !item.completed),
-    [allTodos]
+      allTodos.filter((todo) => new Date(todo.date) > today && !todo.completed),
+    [allTodos, today]
   );
-  console.log(todos);
+
+  const lastShownMonth = nextMonths[nextMonths.length - 1];
+  const remainingTodos = todos.filter(
+    (todo) =>
+      (new Date(todo.date).getUTCMonth() > lastShownMonth.getUTCMonth() &&
+        new Date(todo.date).getUTCFullYear() ===
+          lastShownMonth.getUTCFullYear()) ||
+      new Date(todo.date).getUTCFullYear() > lastShownMonth.getUTCFullYear()
+  );
+  const remainingTodosByYear = groupBy(remainingTodos, (todo) =>
+    new Date(todo.date).getUTCFullYear()
+  );
 
   return (
     <View title="Upcoming">
@@ -80,36 +101,65 @@ function UpcomingView() {
         />
       ))}
       {nextMonths.map((date, index) => {
-        const day7 = nextDays[nextDays.length - 1];
-        const thisMonthTodos = todos.filter(
-          (todo) =>
-            new Date(todo.date).getMonth() === date.getMonth() &&
-            new Date(todo.date).getDate() > day7.getDate()
-        );
+        const lastShownDay = nextDays[nextDays.length - 1];
         if (index === 0) {
-          const lastDay = new Date(day7.getFullYear(), day7.getMonth() + 1, 0);
+          const lastDayOfMonth = new Date(
+            lastShownDay.getFullYear(),
+            lastShownDay.getMonth() + 1,
+            0
+          );
           return (
-            <MonthView
+            <ListView
               key={index}
-              month={new Intl.DateTimeFormat("en-US", { month: "long" }).format(
+              title={new Intl.DateTimeFormat("en-US", { month: "long" }).format(
                 date
               )}
-              first={day7.getUTCDate() + 1}
-              last={lastDay.getUTCDate()}
-              todos={thisMonthTodos}
+              first={lastShownDay.getUTCDate() + 1}
+              last={lastDayOfMonth.getUTCDate()}
+              todos={todos
+                .filter(
+                  (todo) =>
+                    new Date(todo.date).getUTCFullYear() ===
+                      date.getUTCFullYear() &&
+                    new Date(todo.date).getUTCMonth() === date.getUTCMonth() &&
+                    new Date(todo.date).getUTCDate() > lastShownDay.getUTCDate()
+                )
+                .sort(
+                  (a, b) =>
+                    new Date(a.date).getTime() - new Date(b.date).getTime()
+                )}
             />
           );
         }
         return (
-          <MonthView
+          <ListView
             key={index}
-            month={new Intl.DateTimeFormat("en-US", { month: "long" }).format(
+            title={new Intl.DateTimeFormat("en-US", { month: "long" }).format(
               date
             )}
-            todos={thisMonthTodos}
+            todos={todos
+              .filter(
+                (todo) =>
+                  new Date(todo.date).getUTCFullYear() ===
+                    date.getUTCFullYear() &&
+                  new Date(todo.date).getUTCMonth() === date.getUTCMonth()
+              )
+              .sort(
+                (a, b) =>
+                  new Date(a.date).getTime() - new Date(b.date).getTime()
+              )}
           />
         );
       })}
+      {Object.keys(remainingTodosByYear).map((year, index) => (
+        <ListView
+          key={index}
+          title={year}
+          todos={remainingTodosByYear[year].sort(
+            (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
+          )}
+        />
+      ))}
     </View>
   );
 }
