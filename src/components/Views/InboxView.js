@@ -9,7 +9,7 @@ import "./InboxView.css";
 function InboxView(props) {
   const allTodos = useSelector((state) => state.todo.todos);
   const todos = useMemo(
-    () => allTodos.filter((item) => !!item.inbox && !item.completed),
+    () => allTodos.filter((item) => !!item.inbox && !item.completed && !item.someday),
     [allTodos]
   );
 

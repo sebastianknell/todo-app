@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { Routes, Route, Navigate } from "react-router-dom";
+import { uiActions } from "./store/ui-slice";
 import { fetchTodos } from "./store/todo-api";
 
 import Sidebar from "./components/Sidebar/Sidebar";

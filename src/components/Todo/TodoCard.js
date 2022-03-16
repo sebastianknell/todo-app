@@ -1,10 +1,10 @@
-import ReactDOM from "react-dom";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import { useDispatch } from "react-redux";
+import useClickOutside from "../../hooks/use-click-outside";
+
+import { uiActions } from "../../store/ui-slice";
 import { updateTodo } from "../../store/todo-api";
 import { removeTodo } from "../../store/todo-api";
-// import { todoActions } from "../../store/todo-slice";
-import { uiActions } from "../../store/ui-slice";
 import { isEmpty } from "../../utils/todo-utils";
 import { getDate } from "../../utils/date-utils";
 
@@ -20,6 +20,7 @@ function TodoCard(props) {
   const [todoDate, setTodoDate] = useState(
     props.todo.date ? getDate(new Date(props.todo.date)) : ""
   );
+  const [someday, setSomeday] = useState(props.todo.someday);
   const [todoDeadline, setTodoDeadline] = useState(
     props.todo.deadline ? getDate(new Date(props.todo.deadline)) : ""
   );
@@ -41,7 +42,7 @@ function TodoCard(props) {
   };
 
   useEffect(() => {
-    titleRef.current.focus();
+    // titleRef.current.focus();
     notesRef.current.style.height = "auto";
     notesRef.current.style.height = notesRef.current.scrollHeight + "px";
   }, []);
@@ -56,6 +57,12 @@ function TodoCard(props) {
     setHasChanged(true);
   };
 
+  const somedayChangeHandler = (event) => {
+    setSomeday(event.target.checked);
+    setTodoDate("");
+    setHasChanged(true);
+  };
+
   const deadlineChangeHandler = (event) => {
     setTodoDeadline(event.target.value);
     setHasChanged(true);
@@ -67,9 +74,9 @@ function TodoCard(props) {
     setHasChanged(true);
   };
 
-  const closeHandler = () => {
-    const newTitle = titleRef.current.value;
-    const newNotes = notesRef.current.value;
+  const closeHandler = useCallback(() => {
+    const newTitle = titleRef.current.value === "" ? null : titleRef.current.value;
+    const newNotes = notesRef.current.value === "" ? null : notesRef.current.value;
     const shouldUpdate =
       hasChanged ||
       newTitle !== props.todo.title ||
@@ -77,9 +84,10 @@ function TodoCard(props) {
 
     const updatedTodo = {
       ...props.todo,
-      title: newTitle === "" ? null : newTitle,
-      notes: newNotes === "" ? null : newNotes,
+      title: newTitle,
+      notes: newNotes,
       date: todoDate === "" ? null : todoDate,
+      someday: someday,
       deadline: todoDeadline === "" ? null : todoDeadline,
       completed: completed,
       inbox: todoLocation === "inbox" && !todoDate,
@@ -87,22 +95,32 @@ function TodoCard(props) {
 
     if (isEmpty(updatedTodo)) {
       dispatch(removeTodo(props.todo.id));
-    }
-    else if (shouldUpdate) {
+    } else if (shouldUpdate) {
       dispatch(updateTodo(updatedTodo));
-    } 
-  
+    }
+
     dispatch(uiActions.setOpenedTodo(null));
-  };
+  }, [
+    props.todo,
+    completed,
+    todoDate,
+    someday,
+    todoDeadline,
+    todoLocation,
+    dispatch,
+    hasChanged,
+  ]);
+
+  const { ref, isComponentVisible } = useClickOutside(true);
+
+  useEffect(() => {
+    if (!isComponentVisible) {
+      closeHandler();
+    }
+  }, [isComponentVisible, closeHandler]);
 
   return (
-    <>
-      {/* TODO try moving to component */}
-      {/* TODO try this instead https://stackoverflow.com/a/45323523 */}
-      {ReactDOM.createPortal(
-        <div className="backdrop" onClick={closeHandler} />,
-        document.getElementById("overlays")
-      )}
+    <div ref={ref}>
       <Card className="todo-card">
         <header className="todo-header">
           <Checkbox completed={completed} onClick={handleCompleted} />
@@ -136,21 +154,31 @@ function TodoCard(props) {
               min={new Date().toLocaleDateString("en-CA")}
               value={todoDate}
               onChange={dateChangeHandler}
+              disabled={someday}
+            />
+          </div>
+          <div>
+            <label htmlFor="someday" className="footer-title">
+              Someday
+            </label>
+            <input
+              id="someday"
+              type="checkbox"
+              checked={someday}
+              onChange={somedayChangeHandler}
             />
           </div>
           <div>
             <label htmlFor="deadline" className="footer-title">
               Deadline
             </label>
-            <span>
-              <input
-                id="deadline"
-                className="date-input"
-                type="date"
-                value={todoDeadline}
-                onChange={deadlineChangeHandler}
-              />
-            </span>
+            <input
+              id="deadline"
+              className="date-input"
+              type="date"
+              value={todoDeadline}
+              onChange={deadlineChangeHandler}
+            />
           </div>
           {/* temporary. will change to custom view */}
           <div className="selector">
@@ -161,7 +189,7 @@ function TodoCard(props) {
           </div>
         </footer>
       </Card>
-    </>
+    </div>
   );
 }
 

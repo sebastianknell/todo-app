@@ -1,7 +1,7 @@
 import { todoActions } from "./todo-slice";
 import { uiActions } from "./ui-slice";
 
-const API_URL = "http://localhost:8000";
+const API_URL = "https://polar-springs-52524.herokuapp.com";
 const headers = new Headers();
 headers.append("Content-Type", "application/json");
 
