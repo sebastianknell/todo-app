@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import { FaPlus } from "react-icons/fa";
 import { GoSettings } from "react-icons/go";
 import Spacer from "../UI/Spacer";
+import Tooltip from "../UI/Tooltip";
 import SiderbarItem from "./SidebarItem";
 import SidebarAreaItem from "./SidebarAreaItem";
 
@@ -48,7 +49,10 @@ function Sidebar(props) {
           <FaPlus />
           <span className="sidebar-button-text">New List</span>
         </button>
-        <GoSettings className="btn" fontSize="18px" />
+        <button className="btn sidebar-preferences">
+          <Tooltip title="Preferences" />
+          <GoSettings fontSize="18px" />
+        </button>
       </div>
     </div>
   );

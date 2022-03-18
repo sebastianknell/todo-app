@@ -25,7 +25,7 @@ function App() {
     <div className="app">
       <Sidebar />
       <div className="col grow">
-        <div className="view">
+        <div id="view" className="view">
           <Routes>
             <Route path="/" element={<Navigate replace to="/inbox" />} />
             <Route path="/inbox" element={<InboxView />} />

@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 
-export default function useClickOutside(initialIsVisible) {
+export default function useClickOutside(initialIsVisible, element) {
   const [isComponentVisible, setIsComponentVisible] =
     useState(initialIsVisible);
   const ref = useRef(null);
@@ -10,13 +10,14 @@ export default function useClickOutside(initialIsVisible) {
       setIsComponentVisible(false);
     }
   };
+  if (!element) element = document
 
   useEffect(() => {
-    document.addEventListener("click", handleClickOutside, true);
+    element.addEventListener("click", handleClickOutside, true);
     return () => {
-      document.removeEventListener("click", handleClickOutside, true);
+      element.removeEventListener("click", handleClickOutside, true);
     };
-  }, []);
+  }, [element]);
 
   return { ref, isComponentVisible, setIsComponentVisible };
 }

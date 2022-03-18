@@ -111,7 +111,7 @@ function TodoCard(props) {
     hasChanged,
   ]);
 
-  const { ref, isComponentVisible } = useClickOutside(true);
+  const { ref, isComponentVisible } = useClickOutside(true, document.getElementById("view"));
 
   useEffect(() => {
     if (!isComponentVisible) {

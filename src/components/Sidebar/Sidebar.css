@@ -39,3 +39,9 @@
   font-size: 14px;
   margin-left: 0.25rem;
 }
+
+.sidebar-preferences:hover .tooltip {
+  visibility: visible;
+  animation: fade-in 0.5s ease-out 0.5s;
+  animation-fill-mode: backwards;
+}
