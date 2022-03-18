@@ -1,17 +1,10 @@
-function Checkbox(props) {
-  let style = {
-    height: "8px",
-    width: "8px",
-    flexShrink: 0,
-    border: "1px gray solid",
-    borderRadius: "25%",
-    cursor: "pointer",
-  };
+import './Checkbox.css'
 
+function Checkbox(props) {
   return (
     // TODO use input checkbox instead
     <div
-      style={props.completed ? { ...style, backgroundColor: "#1959B6" } : style}
+      className={`checkbox no-shrink ${props.completed ? "completed" : ""}`}
       onClick={props.onClick}
     ></div>
   );

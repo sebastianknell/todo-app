@@ -1,0 +1,19 @@
+.checkbox {
+  height: 10px;
+  width: 10px;
+  border: 1px solid gray;
+  border-radius: 25%;
+  cursor: pointer;
+  transition: transform 200ms
+}
+
+.checkbox:active {
+  transform: scale(1.1);
+}
+
+.checkbox.completed {
+  height: 12px;
+  width: 12px;
+  background-color: #1959b6;
+  border: none;
+}

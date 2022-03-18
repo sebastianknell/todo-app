@@ -5,8 +5,6 @@ import { fetchCompletedTodos } from "../../store/todo-api";
 import View from "./shared/View";
 import Todo from "../Todo/Todo";
 
-import "./InboxView.css";
-
 let shouldFetch = true;
 
 function LogbookView(props) {

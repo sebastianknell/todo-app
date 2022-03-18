@@ -4,8 +4,6 @@ import { useSelector } from "react-redux";
 import View from "./shared/View";
 import Todo from "../Todo/Todo";
 
-import "./InboxView.css";
-
 function InboxView(props) {
   const allTodos = useSelector((state) => state.todo.todos);
   const todos = useMemo(
