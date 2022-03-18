@@ -9,7 +9,7 @@ export const uiSlice = createSlice({
   reducers: {
     setSelectedTodo(state, action) {
       const id = action.payload;
-      state.selectedTodo = state.selectedTodo === id ? null : id;
+      state.selectedTodo = id;
       if (state.openedTodo) state.openedTodo = null;
     },
     setOpenedTodo(state, action) {

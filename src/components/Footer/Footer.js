@@ -1,8 +1,10 @@
 // import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { useLocation } from "react-router-dom";
 import { addTodo } from "../../store/todo-api";
 import { todoActions } from "../../store/todo-slice";
 import { uiActions } from "../../store/ui-slice";
+import { getTodoFromContext } from "../../utils/todo-utils";
 
 import {
   FaRegCalendar,
@@ -17,10 +19,11 @@ import "./Footer.css";
 function Footer(props) {
   const dispatch = useDispatch();
   const selectedTodo = useSelector((state) => state.ui.selectedTodo);
+  const context = useLocation()
   const iconClass = selectedTodo === null ? "icon-disabled" : "icon-enabled";
 
   const handleNewTodo = () => {
-    dispatch(addTodo());
+    dispatch(addTodo(getTodoFromContext(context.pathname)));
   };
 
   return (

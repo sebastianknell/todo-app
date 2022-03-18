@@ -42,7 +42,7 @@ function TodoCard(props) {
   };
 
   useEffect(() => {
-    // titleRef.current.focus();
+    titleRef.current.focus();
     notesRef.current.style.height = "auto";
     notesRef.current.style.height = notesRef.current.scrollHeight + "px";
   }, []);
