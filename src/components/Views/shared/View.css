@@ -1,7 +1,11 @@
-.wrapper-view {
+.view-wrapper {
   display: flex;
   flex-direction: column;
   flex-grow: 2;
   padding: 1rem;
   margin: 0 25%;
+}
+
+.view-body {
+  margin-left: 0.5rem;
 }

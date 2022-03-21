@@ -6,8 +6,6 @@ const API_URL = "http://localhost:5000";
 const headers = new Headers();
 headers.append("Content-Type", "application/json");
 
-// TODO add more validation and error handling
-
 export const fetchTodos = () => async (dispatch) => {
   console.log("Fetching todos");
   const res = await fetch(`${API_URL}/todo/all`);
@@ -24,6 +22,15 @@ export const fetchCompletedTodos = () => async (dispatch) => {
   if (res.ok) {
     const todos = await res.json();
     dispatch(todoActions.addTodos(todos));
+  }
+};
+
+export const fetchDeletedTodos = async () => {
+  console.log("Fetching deleted todos");
+  const res = await fetch(`${API_URL}/todo/deleted`);
+  if (res.ok) {
+    const todos = await res.json();
+    return todos;
   }
 };
 
@@ -74,10 +81,20 @@ export const updateTodo = (todo) => async (dispatch) => {
   }
 };
 
+export const logTodos = (todo) => async (dispatch) => {
+  console.log("Logging todo");
+  const res = await fetch(`${API_URL}/todo/log`, {
+    method: "PUT",
+  });
+  if (res.ok) {
+    dispatch(todoActions.logTodos());
+  }
+};
+
 export const removeTodo = (id) => async (dispatch) => {
   console.log("Removing todo");
   const res = await fetch(`${API_URL}/todo/delete`, {
-    method: "DELETE",
+    method: "PUT",
     headers: headers,
     body: JSON.stringify({
       id: id,
@@ -87,3 +104,15 @@ export const removeTodo = (id) => async (dispatch) => {
     dispatch(todoActions.removeTodo(id));
   }
 };
+
+export const emptyTrash = async () => {
+  console.log("Emptying trash");
+  const res = await fetch(`${API_URL}/todo/empty`, {
+    method: "DELETE",
+  });
+  if (res.ok) {
+    // dispatch(todoActions.emptyTrash());
+    return true;
+  }
+  return false;
+}

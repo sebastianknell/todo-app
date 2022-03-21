@@ -1,0 +1,16 @@
+.header-button {
+  padding: 0.25rem 0.5rem;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  border-radius: 3px;
+  border: none;
+  color: white;
+  background-color: #509cff;
+  font-weight: bold;
+  cursor: pointer;
+  width: fit-content;
+}
+
+.header-button:active {
+  background-color: #488de5;
+}

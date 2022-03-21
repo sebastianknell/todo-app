@@ -8,6 +8,7 @@ import { removeTodo } from "../../store/todo-api";
 import { isEmpty } from "../../utils/todo-utils";
 import { getDate } from "../../utils/date-utils";
 
+// import AnimateHeight from "react-animate-height";
 import Card from "../UI/Card";
 import Checkbox from "./Checkbox";
 
@@ -121,74 +122,76 @@ function TodoCard(props) {
 
   return (
     <div ref={ref}>
-      <Card className="todo-card">
-        <header className="todo-header">
-          <Checkbox completed={completed} onClick={handleCompleted} />
-          <div className="todo-title">
-            <input
-              placeholder="New To-Do"
-              defaultValue={props.todo.title}
-              ref={titleRef}
-            />
-          </div>
-        </header>
-        <main>
-          <div className="notes">
-            <textarea
-              placeholder="Notes"
-              defaultValue={props.todo.notes}
-              onChange={notesChangeHandler}
-              ref={notesRef}
-            ></textarea>
-          </div>
-        </main>
-        <footer>
-          <div>
-            <label htmlFor="date" className="footer-title">
-              Date
-            </label>
-            <input
-              id="date"
-              className="date-input"
-              type="date"
-              min={new Date().toLocaleDateString("en-CA")}
-              value={todoDate}
-              onChange={dateChangeHandler}
-              disabled={someday}
-            />
-          </div>
-          <div>
-            <label htmlFor="someday" className="footer-title">
-              Someday
-            </label>
-            <input
-              id="someday"
-              type="checkbox"
-              checked={someday}
-              onChange={somedayChangeHandler}
-            />
-          </div>
-          <div>
-            <label htmlFor="deadline" className="footer-title">
-              Deadline
-            </label>
-            <input
-              id="deadline"
-              className="date-input"
-              type="date"
-              value={todoDeadline}
-              onChange={deadlineChangeHandler}
-            />
-          </div>
-          {/* temporary. will change to custom view */}
-          <div className="selector">
-            <select value={todoLocation} onChange={locationChangeHandler}>
-              <option value="inbox">Inbox</option>
-              <option value="no-project">No Project</option>
-            </select>
-          </div>
-        </footer>
-      </Card>
+      {/* <AnimateHeight style={{ flexShrink: 0 }} duration={2000} height={"auto"}> */}
+        <Card className="todo-card">
+          <header className="todo-header">
+            <Checkbox completed={completed} onClick={handleCompleted} />
+            <div className="todo-title">
+              <input
+                placeholder="New To-Do"
+                defaultValue={props.todo.title}
+                ref={titleRef}
+              />
+            </div>
+          </header>
+          <main>
+            <div className="notes">
+              <textarea
+                placeholder="Notes"
+                defaultValue={props.todo.notes}
+                onChange={notesChangeHandler}
+                ref={notesRef}
+              ></textarea>
+            </div>
+          </main>
+          <footer>
+            <div>
+              <label htmlFor="date" className="footer-title">
+                Date
+              </label>
+              <input
+                id="date"
+                className="date-input"
+                type="date"
+                min={new Date().toLocaleDateString("en-CA")}
+                value={todoDate}
+                onChange={dateChangeHandler}
+                disabled={someday}
+              />
+            </div>
+            <div>
+              <label htmlFor="someday" className="footer-title">
+                Someday
+              </label>
+              <input
+                id="someday"
+                type="checkbox"
+                checked={someday}
+                onChange={somedayChangeHandler}
+              />
+            </div>
+            <div>
+              <label htmlFor="deadline" className="footer-title">
+                Deadline
+              </label>
+              <input
+                id="deadline"
+                className="date-input"
+                type="date"
+                value={todoDeadline}
+                onChange={deadlineChangeHandler}
+              />
+            </div>
+            {/* temporary. will change to custom view */}
+            <div className="selector">
+              <select value={todoLocation} onChange={locationChangeHandler}>
+                <option value="inbox">Inbox</option>
+                <option value="no-project">No Project</option>
+              </select>
+            </div>
+          </footer>
+        </Card>
+      {/* </AnimateHeight> */}
     </div>
   );
 }

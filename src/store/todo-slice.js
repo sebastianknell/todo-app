@@ -40,14 +40,19 @@ export const todoSlice = createSlice({
     addTodos(state, action) {
       const todos = action.payload;
       for (let todo of todos) {
-        state.todos.push(todo)
+        state.todos.push(todo);
       }
     },
 
     completeTodo(state, action) {
       const id = action.payload;
       const index = state.todos.findIndex((item) => item.id === id);
-      state.todos[index].completed = !state.todos[index].completed;
+      if (state.todos[index].completed) {
+        state.todos[index].completed = false;
+        state.todos[index].logged = false;
+      } else {
+        state.todos[index].completed = true;
+      }
     },
 
     updateTodo(state, action) {
@@ -56,10 +61,29 @@ export const todoSlice = createSlice({
       state.todos[index] = todo;
     },
 
+    logTodos(state, action) {
+      state.todos.forEach((item, index, arr) => {
+        if (item.completed && !item.logged) {
+          arr[index] = {
+            ...item,
+            logged: true,
+          };
+        }
+      });
+    },
+
     removeTodo(state, action) {
       const id = action.payload;
-      state.todos = state.todos.filter((item) => item.id !== id);
+      const index = state.todos.findIndex((item) => item.id === id);
+      state.todos[index] = {
+        ...state.todos[index],
+        trash: true,
+      };
     },
+
+    // emptyTrash(state, action) {
+    //   state.todos = state.todos.filter((item) => !!item.trash);
+    // },
   },
 });
 

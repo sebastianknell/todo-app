@@ -16,7 +16,7 @@ function TodayView() {
       allTodos.filter(
         (item) =>
           getDate(new Date(item.date)) === getDate(today) &&
-          !item.completed
+          !item.logged
       ),
     [allTodos]
   );

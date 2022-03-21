@@ -12,6 +12,7 @@ import UpcomingView from "./components/Views/UpcomingView";
 import AnytimeView from "./components/Views/AnytimeView";
 import SomedayView from "./components/Views/SomedayView";
 import LogbookView from "./components/Views/LogbookView";
+import TrashView from "./components/Views/TrashView";
 import "./App.css";
 
 function App() {
@@ -34,6 +35,7 @@ function App() {
             <Route path="/anytime" element={<AnytimeView />} />
             <Route path="/someday" element={<SomedayView />} />
             <Route path="/logbook" element={<LogbookView />} />
+            <Route path="/trash" element={<TrashView />} />
             {/* <Route path="*" element={<Navigate replace to="/inbox" />} /> */}
           </Routes>
         </div>

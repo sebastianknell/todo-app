@@ -70,7 +70,7 @@ function UpcomingView() {
   const allTodos = useSelector((state) => state.todo.todos);
   const todos = useMemo(
     () =>
-      allTodos.filter((todo) => new Date(todo.date) > today && !todo.completed),
+      allTodos.filter((todo) => new Date(todo.date) > today && !todo.logged),
     [allTodos, today]
   );
 

@@ -2,11 +2,13 @@ import Header from "./Header";
 
 import "./View.css";
 
-function View(props) {
+function View({title, children}) {
   return (
-    <div className="wrapper-view">
-      <Header title={props.title} />
-      {props.children}
+    <div className="view-wrapper">
+      <Header title={title} />
+      <div className="view-body">
+        {children}
+      </div>
     </div>
   );
 }

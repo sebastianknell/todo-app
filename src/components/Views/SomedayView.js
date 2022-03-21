@@ -7,7 +7,7 @@ import Todo from "../Todo/Todo";
 export default function SomedayView() {
   const allTodos = useSelector((state) => state.todo.todos);
   const todos = useMemo(
-    () => allTodos.filter((item) => !item.completed && !!item.someday),
+    () => allTodos.filter((item) => !item.logged && !!item.someday),
     [allTodos]
   );
 
