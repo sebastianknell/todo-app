@@ -5,6 +5,8 @@ the [Things](http://culturedcode.com/things/) macOS app. I'm focusing first on f
 This is how it currently looks.
 ![](current-look.png)
 
+Check it out here: https://sebastianknell.github.io/todo-app/
+
 ## Next To-Do's
 * Project/Areas CRUD
 * Footer actions
