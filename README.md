@@ -4,3 +4,9 @@ the [Things](http://culturedcode.com/things/) macOS app. I'm focusing first on f
 
 This is how it currently looks.
 ![](current-look.png)
+
+## Next To-Do's
+* Project/Areas CRUD
+* Footer actions
+  * Custom calendar component
+  * Location selector component
