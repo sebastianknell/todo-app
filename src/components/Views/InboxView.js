@@ -7,7 +7,7 @@ import Todo from "../Todo/Todo";
 function InboxView(props) {
   const allTodos = useSelector((state) => state.todo.todos);
   const todos = useMemo(
-    () => allTodos.filter((item) => !!item.inbox && !item.logged && !item.someday),
+    () => allTodos.filter((todo) => !!todo.inbox && !todo.logged && !todo.someday && !todo.trash),
     [allTodos]
   );
 

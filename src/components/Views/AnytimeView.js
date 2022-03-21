@@ -7,7 +7,7 @@ import Todo from "../Todo/Todo";
 export default function AnytimeView() {
   const allTodos = useSelector((state) => state.todo.todos);
   const todos = useMemo(
-    () => allTodos.filter((item) => !item.logged && !item.inbox && !item.date),
+    () => allTodos.filter((todo) => !todo.logged && !todo.inbox && !todo.date && !todo.trash),
     [allTodos]
   );
 

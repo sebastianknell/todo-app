@@ -1,14 +1,14 @@
 import { todoActions } from "./todo-slice";
 import { uiActions } from "./ui-slice";
 
-const API_URL = "http://localhost:5000";
-// const API_URL = "https://polar-springs-52524.herokuapp.com";
+// const API_URL = "http://localhost:5000/todo";
+const API_URL = "https://polar-springs-52524.herokuapp.com/todo";
 const headers = new Headers();
 headers.append("Content-Type", "application/json");
 
 export const fetchTodos = () => async (dispatch) => {
   console.log("Fetching todos");
-  const res = await fetch(`${API_URL}/todo/all`);
+  const res = await fetch(`${API_URL}/all`);
   if (res.ok) {
     const todos = await res.json();
     dispatch(todoActions.addTodos(todos));
@@ -18,7 +18,7 @@ export const fetchTodos = () => async (dispatch) => {
 
 export const fetchCompletedTodos = () => async (dispatch) => {
   console.log("Fetching completed todos");
-  const res = await fetch(`${API_URL}/todo/completed`);
+  const res = await fetch(`${API_URL}/completed`);
   if (res.ok) {
     const todos = await res.json();
     dispatch(todoActions.addTodos(todos));
@@ -27,7 +27,7 @@ export const fetchCompletedTodos = () => async (dispatch) => {
 
 export const fetchDeletedTodos = async () => {
   console.log("Fetching deleted todos");
-  const res = await fetch(`${API_URL}/todo/deleted`);
+  const res = await fetch(`${API_URL}/deleted`);
   if (res.ok) {
     const todos = await res.json();
     return todos;
@@ -36,7 +36,7 @@ export const fetchDeletedTodos = async () => {
 
 export const addTodo = (todo) => async (dispatch) => {
   console.log("Adding todo");
-  const res = await fetch(`${API_URL}/todo/add`, {
+  const res = await fetch(`${API_URL}/add`, {
     method: "POST",
     headers: headers,
     body: JSON.stringify({
@@ -54,7 +54,7 @@ export const addTodo = (todo) => async (dispatch) => {
 
 export const completeTodo = (id, completed) => async (dispatch) => {
   console.log("Completing todo");
-  const res = await fetch(`${API_URL}/todo/complete`, {
+  const res = await fetch(`${API_URL}/complete`, {
     method: "PUT",
     headers: headers,
     body: JSON.stringify({
@@ -69,7 +69,7 @@ export const completeTodo = (id, completed) => async (dispatch) => {
 
 export const updateTodo = (todo) => async (dispatch) => {
   console.log("Updating todo");
-  const res = await fetch(`${API_URL}/todo/update`, {
+  const res = await fetch(`${API_URL}/update`, {
     method: "PUT",
     headers: headers,
     body: JSON.stringify({
@@ -83,7 +83,7 @@ export const updateTodo = (todo) => async (dispatch) => {
 
 export const logTodos = (todo) => async (dispatch) => {
   console.log("Logging todo");
-  const res = await fetch(`${API_URL}/todo/log`, {
+  const res = await fetch(`${API_URL}/log`, {
     method: "PUT",
   });
   if (res.ok) {
@@ -93,7 +93,7 @@ export const logTodos = (todo) => async (dispatch) => {
 
 export const removeTodo = (id) => async (dispatch) => {
   console.log("Removing todo");
-  const res = await fetch(`${API_URL}/todo/delete`, {
+  const res = await fetch(`${API_URL}/delete`, {
     method: "PUT",
     headers: headers,
     body: JSON.stringify({
@@ -107,7 +107,7 @@ export const removeTodo = (id) => async (dispatch) => {
 
 export const emptyTrash = async () => {
   console.log("Emptying trash");
-  const res = await fetch(`${API_URL}/todo/empty`, {
+  const res = await fetch(`${API_URL}/empty`, {
     method: "DELETE",
   });
   if (res.ok) {

@@ -14,9 +14,10 @@ function TodayView() {
   const todos = useMemo(
     () =>
       allTodos.filter(
-        (item) =>
-          getDate(new Date(item.date)) === getDate(today) &&
-          !item.logged
+        (todo) =>
+          getDate(new Date(todo.date)) === getDate(today) &&
+          !todo.logged &&
+          !todo.trash
       ),
     [allTodos]
   );
