@@ -12,9 +12,14 @@
   padding: 0.25rem 0;
 }
 
+#footer {
+  border-top: 1px #eceeef solid;
+}
+
 .icon-enabled {
   cursor: pointer;
   padding: 0.25rem;
+  margin: 0;
   font-size: 18px;
   display: flex;
   justify-content: center;
@@ -29,6 +34,7 @@
 .icon-disabled {
   cursor: default;
   padding: 0.25rem;
+  margin: 0;
   font-size: 18px;
   display: flex;
   justify-content: center;

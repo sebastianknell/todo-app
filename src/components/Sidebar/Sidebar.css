@@ -45,3 +45,40 @@
   animation: fade-in 0.5s ease-out 0.5s;
   animation-fill-mode: backwards;
 }
+
+
+.new-list-menu {
+  position: absolute;
+  bottom: 50px;
+  left: 1rem;
+  padding: 0.5rem;
+  background-color: #2c3239;
+  min-width: max-content;
+}
+
+.new-list-menu-item {
+  padding: 0.5rem;
+  border-radius: 5px;
+  font-size: 16px;
+  user-select: none;
+}
+
+.separator-line {
+  border-top: 1px solid gray;
+  margin: 0.25rem 0;
+}
+
+.new-list-menu-item:hover {
+  background-color: #509cff;
+}
+
+.new-list-menu-item h3 {
+  font-weight: bold;
+  color: white;
+  margin: 0;
+}
+
+.new-list-menu-item p {
+  color: darkgray;
+  margin: 0;
+}

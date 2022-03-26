@@ -39,9 +39,7 @@ function App() {
             {/* <Route path="*" element={<Navigate replace to="/inbox" />} /> */}
           </Routes>
         </div>
-        <div className="row grow" id="footer">
-          <Footer />
-        </div>
+        <Footer />
       </div>
     </div>
   );
