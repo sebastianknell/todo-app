@@ -36,10 +36,6 @@ input {
   caret-color: #71aaff;
 }
 
-input:focus, textarea:focus {
-  outline: none;
-}
-
 .notes {
   display: flex;
   width: 100%;

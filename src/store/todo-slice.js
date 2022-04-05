@@ -1,31 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const testAreas = [
-  {
-    id: 1,
-    name: "Home",
-    projects: [],
-  },
-  {
-    id: 2,
-    name: "Work",
-    projects: [
-      {
-        id: 1,
-        name: "To-Do app",
-        notes: "",
-        date: "",
-        deadline: "",
-      },
-    ],
-  },
-];
-
 export const todoSlice = createSlice({
   name: "todo-slice",
   initialState: {
     todos: [],
-    areas: testAreas,
   },
   reducers: {
     replaceTodos(state, action) {
@@ -75,15 +53,8 @@ export const todoSlice = createSlice({
     removeTodo(state, action) {
       const id = action.payload;
       const index = state.todos.findIndex((item) => item.id === id);
-      state.todos[index] = {
-        ...state.todos[index],
-        trash: true,
-      };
+      state.todos[index].trash = !state.todos[index].trash;
     },
-
-    // emptyTrash(state, action) {
-    //   state.todos = state.todos.filter((item) => !!item.trash);
-    // },
   },
 });
 

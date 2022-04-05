@@ -11,6 +11,7 @@ import { getDate } from "../../utils/date-utils";
 // import AnimateHeight from "react-animate-height";
 import Card from "../UI/Card";
 import Checkbox from "./Checkbox";
+import NotesArea from "../Notes/NotesArea";
 
 import "./TodoCard.css";
 
@@ -37,15 +38,9 @@ function TodoCard(props) {
   const titleRef = useRef();
 
   const notesRef = useRef();
-  const notesChangeHandler = () => {
-    notesRef.current.style.height = "auto";
-    notesRef.current.style.height = notesRef.current.scrollHeight + "px";
-  };
 
   useEffect(() => {
     titleRef.current.focus();
-    notesRef.current.style.height = "auto";
-    notesRef.current.style.height = notesRef.current.scrollHeight + "px";
   }, []);
 
   const handleCompleted = () => {
@@ -76,8 +71,10 @@ function TodoCard(props) {
   };
 
   const closeHandler = useCallback(() => {
-    const newTitle = titleRef.current.value === "" ? null : titleRef.current.value;
-    const newNotes = notesRef.current.value === "" ? null : notesRef.current.value;
+    const newTitle =
+      titleRef.current.value === "" ? null : titleRef.current.value;
+    const newNotes =
+      notesRef.current.value === "" ? null : notesRef.current.value;
     const shouldUpdate =
       hasChanged ||
       newTitle !== props.todo.title ||
@@ -112,7 +109,10 @@ function TodoCard(props) {
     hasChanged,
   ]);
 
-  const { ref, isComponentVisible } = useClickOutside(true, document.getElementById("view"));
+  const { ref, isComponentVisible } = useClickOutside(
+    true,
+    document.getElementById("view")
+  );
 
   useEffect(() => {
     if (!isComponentVisible) {
@@ -123,74 +123,67 @@ function TodoCard(props) {
   return (
     <div ref={ref}>
       {/* <AnimateHeight style={{ flexShrink: 0 }} duration={2000} height={"auto"}> */}
-        <Card className="todo-card">
-          <header className="todo-header">
-            <Checkbox completed={completed} onClick={handleCompleted} />
-            <div className="todo-title">
-              <input
-                placeholder="New To-Do"
-                defaultValue={props.todo.title}
-                ref={titleRef}
-              />
-            </div>
-          </header>
-          <main>
-            <div className="notes">
-              <textarea
-                placeholder="Notes"
-                defaultValue={props.todo.notes}
-                onChange={notesChangeHandler}
-                ref={notesRef}
-              ></textarea>
-            </div>
-          </main>
-          <footer>
-            <div>
-              <label htmlFor="date" className="footer-title">
-                Date
-              </label>
-              <input
-                id="date"
-                className="date-input"
-                type="date"
-                min={new Date().toLocaleDateString("en-CA")}
-                value={todoDate}
-                onChange={dateChangeHandler}
-                disabled={someday}
-              />
-            </div>
-            <div>
-              <label htmlFor="someday" className="footer-title">
-                Someday
-              </label>
-              <input
-                id="someday"
-                type="checkbox"
-                checked={someday}
-                onChange={somedayChangeHandler}
-              />
-            </div>
-            <div>
-              <label htmlFor="deadline" className="footer-title">
-                Deadline
-              </label>
-              <input
-                id="deadline"
-                className="date-input"
-                type="date"
-                value={todoDeadline}
-                onChange={deadlineChangeHandler}
-              />
-            </div>
-            {/* temporary. will change to custom view */}
-            <div className="selector">
-              <select value={todoLocation} onChange={locationChangeHandler}>
-                <option value="inbox">Inbox</option>
-                <option value="no-project">No Project</option>
-              </select>
-            </div>
-          </footer>
-        </Card>
+      <Card className="todo-card">
+        <header className="todo-header">
+          <Checkbox completed={completed} onClick={handleCompleted} />
+          <div className="todo-title">
+            <input
+              placeholder="New To-Do"
+              defaultValue={props.todo.title}
+              ref={titleRef}
+            />
+          </div>
+        </header>
+        <main>
+          <NotesArea ref={notesRef} notes={props.todo.notes} />
+        </main>
+        <footer>
+          <div>
+            <label htmlFor="date" className="footer-title">
+              Date
+            </label>
+            <input
+              id="date"
+              className="date-input"
+              type="date"
+              min={new Date().toLocaleDateString("en-CA")}
+              value={todoDate}
+              onChange={dateChangeHandler}
+              disabled={someday}
+            />
+          </div>
+          <div>
+            <label htmlFor="someday" className="footer-title">
+              Someday
+            </label>
+            <input
+              id="someday"
+              type="checkbox"
+              checked={someday}
+              onChange={somedayChangeHandler}
+            />
+          </div>
+          <div>
+            <label htmlFor="deadline" className="footer-title">
+              Deadline
+            </label>
+            <input
+              id="deadline"
+              className="date-input"
+              type="date"
+              value={todoDeadline}
+              onChange={deadlineChangeHandler}
+            />
+          </div>
+          {/* temporary. will change to custom view */}
+          <div className="selector">
+            <select value={todoLocation} onChange={locationChangeHandler}>
+              <option value="inbox">Inbox</option>
+              <option value="no-project">No Project</option>
+            </select>
+          </div>
+        </footer>
+      </Card>
       {/* </AnimateHeight> */}
     </div>
   );

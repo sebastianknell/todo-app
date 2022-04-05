@@ -36,7 +36,7 @@ function Sidebar(props) {
     isComponentVisible: showingMenu,
     setIsComponentVisible: setShowingMenu,
   } = useClickOutside(false, document.getElementById("view"));
-  const areas = useSelector((state) => state.todo.areas);
+  const areas = useSelector((state) => state.area.areas);
 
   return (
     <div className="sidebar">

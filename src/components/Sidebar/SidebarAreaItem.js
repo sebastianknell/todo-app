@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useSelector } from "react-redux";
 import { FiBox, FiCircle } from "react-icons/fi";
 import { IoIosArrowForward } from "react-icons/io";
 import SiderbarItem from "./SidebarItem";
@@ -7,7 +8,7 @@ import "./SidebarAreaItem.css";
 
 function SidebarProjectItem({ project }) {
   return (
-    <SiderbarItem to={`project-${project.name.toLowerCase()}`}>
+    <SiderbarItem to={`project/${project.id}`}>
       <div className="sidebar-area-item">
         <div className="sidebar-area-item-head">
           <FiCircle />
@@ -29,12 +30,14 @@ function SidebarAreaItem({ area }) {
   if (isExpanded) arrowClasses += " rotating-right";
   else arrowClasses += " rotating-left";
 
-  const projects = area.projects.map(project => <SidebarProjectItem key={project.id} project={project}/>)
+  const projects = useSelector((state) =>
+    state.area.projects.filter((project) => project.areaId === area.id)
+  );
+  const projectsItems = projects.map(project => <SidebarProjectItem key={project.id} project={project}/>)
 
   return (
-    // TODO change to nested route
     <>
-      <SiderbarItem bold to={`area-${area.name.toLowerCase()}`}>
+      <SiderbarItem bold to={`area/${area.id}`}>
         <div className="sidebar-area-item">
           <div className="sidebar-area-item-head">
             <FiBox />
@@ -47,7 +50,7 @@ function SidebarAreaItem({ area }) {
         </div>
       </SiderbarItem>
       {/* TODO fade out animation when closed */}
-      {isExpanded && projects}
+      {isExpanded && projectsItems}
     </>
   );
 }
